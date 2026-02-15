@@ -1,5 +1,7 @@
 import os
 
+# Load bounding box annotations from nabirds, which has the format:
+# <image_id> <x> <y> <width> <height>
 def load_bounding_box_annotations(dataset_path=''):
   
   bboxes = {}
@@ -13,6 +15,7 @@ def load_bounding_box_annotations(dataset_path=''):
   
   return bboxes
 
+# Load part annotations from nabirds
 def load_part_annotations(dataset_path=''):
   
   parts = {}
@@ -26,7 +29,9 @@ def load_part_annotations(dataset_path=''):
       parts[image_id][part_id] = list(map(int, pieces[2:]))
 
   return parts  
-  
+
+# Load Names of parts from parts/parts.txt, which has the format:
+# <part_id> <part_name>
 def load_part_names(dataset_path=''):
   
   names = {}
@@ -38,7 +43,9 @@ def load_part_names(dataset_path=''):
       names[part_id] = ' '.join(pieces[1:])
   
   return names  
-    
+
+# Load Names of classes from classes.txt, which has the format:
+# <class_id> <class_name>
 def load_class_names(dataset_path=''):
   
   names = {}
@@ -51,6 +58,8 @@ def load_class_names(dataset_path=''):
   
   return names
 
+# Load class labels for each image from image_class_labels.txt, which has the format:
+# <image_id> <class_id>
 def load_image_labels(dataset_path=''):
   labels = {}
   
@@ -62,7 +71,9 @@ def load_image_labels(dataset_path=''):
       labels[image_id] = class_id
   
   return labels
-        
+
+# Load image paths for pipeline.py, which has the format:
+# <image_id> <relative_path>
 def load_image_paths(dataset_path='', path_prefix=''):
   
   paths = {}
@@ -76,6 +87,8 @@ def load_image_paths(dataset_path='', path_prefix=''):
   
   return paths
 
+# Load image sizes for pipeline.py, which has the format:
+# <image_id> <width> <height>
 def load_image_sizes(dataset_path=''):
   
   sizes = {}
@@ -89,6 +102,7 @@ def load_image_sizes(dataset_path=''):
   
   return sizes
 
+# Represents the hierarchy of classes in the dataset
 def load_hierarchy(dataset_path=''):
   
   parents = {}
@@ -101,6 +115,7 @@ def load_hierarchy(dataset_path=''):
   
   return parents
 
+# Loads photographs associated with each picture
 def load_photographers(dataset_path=''):
   
   photographers = {}
@@ -112,6 +127,7 @@ def load_photographers(dataset_path=''):
   
   return photographers
 
+# Helps pipeline.py determine which images are in the training set and which are in the test set, based on the file train_test_split.txt
 def load_train_test_split(dataset_path=''):
   train_images = []
   test_images = []

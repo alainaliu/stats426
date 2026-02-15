@@ -35,7 +35,7 @@ from nabirds_data_loaders import (
 
 
 # CONFIG
-DATA_DIR       = "."
+DATA_DIR       = "nabirds"
 OUTPUT_DIR     = "checkpoints"
 IMG_SIZE       = 224            # standard ResNet input
 BATCH_SIZE     = 32

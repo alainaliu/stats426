@@ -1,2 +1,5 @@
 nabirds/
 .DS_Store
+.venv/
+__pycache__/
+checkpoints/
