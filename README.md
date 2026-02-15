@@ -11,6 +11,8 @@
 > **STAT 426 – Project 1 (Team 12)**
 >
 > A CNN pipeline for fine-grained bird species classification on the [NABirds dataset](https://dl.allaboutbirds.org/nabirds) (Cornell Lab of Ornithology). The project explores how robust a classifier can be made against real-world image challenges (lighting, blur, distance, background bias) through data augmentation, transfer learning, and evaluation diagnostics.
+>
+> *Note:* Claude Opus was used to help with the presentation and layout of project repository, but all modeling logic/construction was done by our project team.
 
 ---
 
@@ -18,10 +20,15 @@
 
 ```
 stats426/
-├── pipeline.py                 # Full training + evaluation pipeline
-├── nabirds_data_loaders.py     # Helper functions to load NABirds metadata
+├── pipeline_script.py          # Entry point — training loop + main()
 ├── requirements.txt            # Python dependencies
 ├── README.md
+├── src/                        # Source package
+│   ├── __init__.py
+│   ├── config.py               # All hyperparameters & paths
+│   ├── dataset.py              # NABirdsDataset class, data loaders, transforms
+│   ├── model.py                # NABirdsResNet model architecture
+│   └── evaluation.py           # Metrics, plots, and report generation
 ├── checkpoints/                # Saved models & evaluation outputs (generated)
 │   ├── best.pth
 │   ├── last.pth
@@ -68,7 +75,7 @@ Download from <https://dl.allaboutbirds.org/nabirds> and extract so that the `im
 ### 4. Run the pipeline
 
 ```bash
-python pipeline.py
+python pipeline_script.py
 ```
 
 All checkpoints and evaluation artifacts are saved to `checkpoints/`.
@@ -84,7 +91,7 @@ All checkpoints and evaluation artifacts are saved to `checkpoints/`.
 - **Normalization** – ImageNet mean/std (pretrained backbone).
 
 ### Class Subset Mode
-The full dataset has 555 species. A configurable subset mode (default: classes 295–400, **84 classes**, 3 588 train / 3 735 test images) keeps iteration fast (~6.5 min for 10 epochs on Apple Silicon). Set `USE_SUBSET = False` in `pipeline.py` to train on all classes.
+The full dataset has 555 species. A configurable subset mode (default: classes 295–400, **84 classes**, 3 588 train / 3 735 test images) keeps iteration fast (~6.5 min for 10 epochs on Apple Silicon). Set `USE_SUBSET = False` in `src/config.py` to train on all classes.
 
 ### Class Imbalance
 Class sizes range from 13 to 120 images. **Weighted random sampling** (inverse frequency) ensures balanced representation per epoch.
@@ -132,7 +139,7 @@ Class sizes range from 13 to 120 images. **Weighted random sampling** (inverse f
 
 ## Configuration
 
-All hyper-parameters live at the top of `pipeline.py`:
+All hyper-parameters live in `src/config.py`:
 
 | Variable | Default | Description |
 |---|---|---|
